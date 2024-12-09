@@ -7,7 +7,7 @@
 
 void Hangman::generateWord()
 {
-	std::string_view word{m_wordList.data()[Random::get(0, static_cast<int>(m_wordList.size()) - 1)]};
+	std::string_view word{m_wordList[Random::get<std::size_t>(0, m_wordList.size() - 1)]};
 
 	for (const auto& letter : word)
 	{
