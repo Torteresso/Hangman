@@ -2,6 +2,7 @@
 #define HANDMAN_H
 
 #include <vector>
+#include <string_view>
 
 class Hangman
 {
@@ -11,6 +12,7 @@ private:
 	int m_GuessesLeft{ m_nbGuesses };
 	std::vector<char> m_word{};
 	std::vector<char> m_lettersEntered{};
+	std::vector<std::string_view> m_wordList{ "gobelin", "banane", "immeuble", "insupportable", "brocoli", "ordinateur" };
 
 	void generateWord();
 	void sayRules();

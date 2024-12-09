@@ -1,13 +1,13 @@
 #include "hangman.h"
 #include <iostream>
-#include <string>
+#include <string_view>
 #include <algorithm>
 #include "error.h"
-
+#include "random.h"
 
 void Hangman::generateWord()
 {
-	std::string word{ "gobelin" };
+	std::string_view word{m_wordList.data()[Random::get(0, static_cast<int>(m_wordList.size()) - 1)]};
 
 	for (const auto& letter : word)
 	{
