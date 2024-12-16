@@ -12,7 +12,7 @@ private:
 	int m_GuessesLeft{ m_nbGuesses };
 	std::vector<char> m_word{};
 	std::vector<char> m_lettersEntered{};
-	std::vector<std::string_view> m_wordList{ "gobelin", "banane", "immeuble", "insupportable", "brocoli", "ordinateur" };
+	std::vector<std::string_view> m_wordList{"le silence"};
 
 	void generateWord();
 	void sayRules();

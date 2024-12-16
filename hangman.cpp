@@ -16,6 +16,7 @@ void Hangman::generateWord()
 
 	m_GuessesLeft = m_nbGuesses;
 	m_lettersEntered.clear();
+	m_lettersEntered.push_back(' ');
 }
 
 void Hangman::sayRules()
@@ -146,7 +147,7 @@ bool Hangman::checkNewLetter(const char newLetter)
 
 bool Hangman::isLetterInAlphabet(const char letter)
 {
-	for (const auto& l : "abcdefghijklmnopqrstuvwxyz")
+	for (const auto& l : "abcdefghijklmnopqrstuvwxyz'")
 	{
 		if (l == letter) return true;
 	}
