@@ -13,7 +13,10 @@ void Hangman::generateWord()
 	{
 		m_word.push_back({ letter });
 	}
+}
 
+void Hangman::resetData()
+{
 	m_GuessesLeft = m_nbGuesses;
 	m_lettersEntered.clear();
 	m_lettersEntered.push_back(' ');
@@ -179,6 +182,7 @@ void Hangman::play()
 {
 	sayRules();
 	generateWord();
+	resetData();
 	
 	do
 	{ 

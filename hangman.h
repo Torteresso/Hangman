@@ -26,6 +26,7 @@ private:
 	bool isLetterInAlphabet(const char letter);
 	bool userHasWon();
 	void userHasLost();
+	void resetData();
 
 public:
 	void play();
