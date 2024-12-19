@@ -66,7 +66,7 @@ void Hangman::displayGuesses()
 
 	for (const auto& letter : m_lettersEntered)
 	{
-		if (isLetterInArray(letter, m_word)) continue;
+		if (isLetterInArray(letter, m_word) || letter == ' ') continue;
 
 		std::cout << letter;
 	}
