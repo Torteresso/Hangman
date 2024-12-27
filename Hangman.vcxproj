@@ -144,6 +144,9 @@
     <ClInclude Include="hangman.h" />
     <ClInclude Include="random.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="liste_francais.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

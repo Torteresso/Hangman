@@ -1,14 +1,57 @@
 #include "hangman.h"
+#include <fstream>
 #include <iostream>
 #include <string_view>
 #include <algorithm>
 #include "error.h"
 #include "random.h"
 
+bool Hangman::generateWordList(const char filename[])
+{
+	std::ifstream listWords{ filename };
+
+	if (!listWords)
+	{
+		std::cout << "Impossible de charger le fichier contenant les mots a faire deviner\n";
+		return false;
+	}
+
+	std::string word{};
+	while (std::getline(listWords, word))
+	{
+		m_wordList.push_back(word);
+	}
+
+	return true;
+}
+
 void Hangman::generateWord()
 {
+	if (m_wordList.empty())
+	{
+		std::cout << "No database to generate a word from, the appropriate word was generated instead\n";
+		m_word = { 'e', 'r', 'r', 'o', 'r' };
+		return;
+	}
+
 	std::string_view word{m_wordList[Random::get<std::size_t>(0, m_wordList.size() - 1)]};
 
+	if (!wordIsValid(word))
+	{
+		std::cout << word << " is not a valid word, please check the database," 
+			<< " the appropriate word was generated instead\n";
+		m_word = { 'e', 'r', 'r', 'o', 'r' };
+		return;
+	}
+
+	for (const auto& letter : word)
+	{
+		m_word.push_back({ letter });
+	}
+}
+
+void Hangman::setWord(const std::string_view word)
+{
 	for (const auto& letter : word)
 	{
 		m_word.push_back({ letter });
@@ -20,6 +63,7 @@ void Hangman::resetData()
 	m_GuessesLeft = m_nbGuesses;
 	m_lettersEntered.clear();
 	m_lettersEntered.push_back(' ');
+	m_word.clear();
 }
 
 void Hangman::sayRules()
@@ -148,9 +192,23 @@ bool Hangman::checkNewLetter(const char newLetter)
 
 }
 
-bool Hangman::isLetterInAlphabet(const char letter)
+bool Hangman::wordIsValid(const std::string_view word) const
 {
-	for (const auto& l : "abcdefghijklmnopqrstuvwxyz'")
+	for (const auto& l : word)
+	{
+		if (!isLetterInAlphabet(l))
+		{
+			std::cout << l << " is not a valid caracter.\n";
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Hangman::isLetterInAlphabet(const char letter) const
+{
+	for (const auto& l : "abcdefghijklmnopqrstuvwxyz'-. ")
 	{
 		if (l == letter) return true;
 	}
@@ -178,11 +236,27 @@ void Hangman::userHasLost()
 	std::cout << "\n";
 }
 
-void Hangman::play()
+void Hangman::printEmptyLines() const
 {
-	sayRules();
-	generateWord();
+	for (int i{}; i < nbNewLines; i++)
+	{
+		std::cout << "\n";
+	}
+}
+
+void Hangman::play(const std::string_view word)
+{
 	resetData();
+	printEmptyLines();
+
+	if (word == "")
+	{
+		generateWord();
+	}
+	else
+	{
+		setWord(word);
+	}
 	
 	do
 	{ 
